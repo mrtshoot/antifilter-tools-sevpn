@@ -1,9 +1,7 @@
 version: '3'
-
 services:
   softether:
-    image: toprock/softether:5.01.9672
-    name: softether
+    image: mrtshoot/softether:5.1.9
     container_name: softether
     restart: unless-stopped
     cap_add:
@@ -26,8 +24,7 @@ services:
       - "./softether_packetlog:/root/packet_log"
       - "./softether_securitylog:/root/security_log"
   squid:
-    image: yegor256/squid-proxy:0.1
-    name: squid
+    image: mrtshoot/squid-proxy:0.1
     container_name: squid
     ports:
       - 8443:3128
@@ -35,5 +32,3 @@ services:
       - USERNAME=mrtshoot
       - PASSWORD=mrtshoothdf4Gedsadd 
     restart: unless-stopped
-    volumes:
-      - "./squid.conf:/etc/squid/squid.conf"
