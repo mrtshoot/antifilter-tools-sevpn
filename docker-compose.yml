@@ -29,6 +29,6 @@ services:
     ports:
       - 8443:3128
     environment:
-      - USERNAME=mrtshoot
-      - PASSWORD=mrtshoothdf4Gedsadd 
+      - USERNAME=username
+      - PASSWORD=password
     restart: unless-stopped
