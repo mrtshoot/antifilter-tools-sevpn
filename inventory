@@ -1,3 +1,3 @@
 [servers]
-inside ansible_user=root ansible_host=INSIDE_IP  ansible_connection=ssh  ansible_port=22 ansible_ssh_pass=INSIDE_SSH_PASS ansible_ssh_extra_args='-o StrictHostKeyChecking=no'
-outside ansible_user=root ansible_host=OUTSIDE_IP  ansible_connection=ssh  ansible_port=22 ansible_ssh_pass=OUTSIDE_SSH_PASS ansible_ssh_extra_args='-o StrictHostKeyChecking=no'
+inside ansible_user=root ansible_host={{ INSIDE_IP }}  ansible_connection=ssh  ansible_port=22 ansible_ssh_pass={{ INSIDE_SSH_PASS }} ansible_ssh_extra_args='-o StrictHostKeyChecking=no'
+outside ansible_user=root ansible_host={{ OUTSIDE_IP }} ansible_connection=ssh  ansible_port=22 ansible_ssh_pass={{ OUTSIDE_SSH_PASS }} ansible_ssh_extra_args='-o StrictHostKeyChecking=no'
