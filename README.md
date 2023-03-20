@@ -26,7 +26,7 @@ and then copy the certificate in your openvpn-sample.ovpn file instead of MYCERT
 ## Configure your Softether Cascading
 1. Spinning up a temporary windows client(7,8,10,...) but if you are already a windows client you don't need to spinning a new one.
 2. Download Softether VPN Server from https://drive.google.com/file/d/1PhoaS69fYDoVv-IgYjUoBZ8UGfbKdYgm/view?usp=share_link and install it.
-3. At first connect to your outside as following picture:
-
+3. At first connect to your outside server. so open softether vpn server and click on new setting and do as the following picture:
+![1](https://user-images.githubusercontent.com/56720170/226371171-0408a7e4-e146-413f-9040-6d0d950ff99f.png)
 
 5. 
