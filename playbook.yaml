@@ -142,20 +142,20 @@
         - {key: net.ipv4.ip_forward,  value: 1}
       tags:
       - tune
-- name: set shecan dns on Iran server
-  hosts: inside
-  remote_user: root
-  become: True
-  tasks:
-    - name: set shecan dns
-      lineinfile:
-        path: /etc/resolv.conf
-        state: present
-        regexp: "^nameserver*"
-        line: "nameserver 178.22.122.100"
-        backup: True
-      tags:
-      - tune
+# - name: set shecan dns on Iran server
+#   hosts: inside
+#   remote_user: root
+#   become: True
+#   tasks:
+#     - name: set shecan dns
+#       lineinfile:
+#         path: /etc/resolv.conf
+#         state: present
+#         regexp: "^nameserver*"
+#         line: "nameserver 178.22.122.100"
+#         backup: True
+#       tags:
+#       - tune
 #Deploy Softether
 - name: Deploy softether
   hosts: servers
