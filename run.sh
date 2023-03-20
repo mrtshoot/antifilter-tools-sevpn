@@ -1,10 +1,5 @@
 #!/bin/bash
 set -eu
-#Install requirementes
-sudo apt update -y
-sudo apt install -y \
-ansible && \
-sshpass
 
 #get insite and outside informations
 read -p "InsideServer IP: " INSIDE_IP
@@ -13,6 +8,12 @@ read -p "OutsideServer IP: " OUTSIDE_IP
 read -p "OutsideServer SSH Password: " OUTSIDE_SSH_PASS
 read -p "Squidproxy Username: " SQUID_USER
 read -p "Squidproxy Password: " SQUID_PASS
+
+#Install requirementes
+sudo apt update -y
+sudo apt install -y \
+ansible && \
+sshpass
 
 #Set Inside and Outside Servers and create inventory file
 sed -i 's/INSIDE_IP/"${INSIDE_IP}"/g' inventory
