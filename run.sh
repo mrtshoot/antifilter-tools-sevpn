@@ -1,6 +1,7 @@
 #!/bin/bash
-
+set -eu
 #Install requirementes
+sudo apt update -y
 sudo apt install -y \
 ansible && \
 sshpass
