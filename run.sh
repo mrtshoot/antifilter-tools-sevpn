@@ -25,4 +25,4 @@ sed -i "s/OUTSIDE_SSH_PASS/$OUTSIDE_SSH_PASS/g" inventory
 ansible-playbook -i inventory playbook.yaml --extra-vars="USERNAME='${SQUID_USER}' PASSWORD='${SQUID_PASS}'"
 
 #OpenVPN Certificate
-ansible -m shell --become -a 'grep "byte ServerCert" /var/opt/antifilter-tools-sevpn/vpn_server.config | cut -d " " -f3 | fold -w 64' -i inventory inside
+ansible -m shell --become -a 'grep "byte ServerCert" /var/opt/antifilter-tools-sevpn/se_data/vpn_server.config | cut -d " " -f3 | fold -w 64' -i inventory inside
