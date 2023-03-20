@@ -9,6 +9,8 @@ read -p "OutsideServer SSH Password: " OUTSIDE_SSH_PASS
 read -p "Squidproxy Username: " SQUID_USER
 read -p "Squidproxy Password: " SQUID_PASS
 
+echo $INSIDE_IP
+
 #Install requirementes
 sudo apt update -y
 sudo apt install -y ansible sshpass
