@@ -9,7 +9,7 @@ services:
     cap_add:
       - NET_ADMIN
     ports:
-      - 53:53
+      # - 53:53
       - 4443:443
       - 992:992
       - 27030:1194/udp

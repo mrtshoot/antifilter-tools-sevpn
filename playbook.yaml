@@ -168,11 +168,16 @@
       remote: origin
       clone: yes
       update: yes
-  - name: Create Squid env
+  - name: Set Squid Username
     lineinfile:
       path: /root/antifilter-tools-sevpn/squid.env
       state: present
-      line: USERNAME={{ USERNAME }}
+      line: PASSWORD={{ USERNAME }}
+      create: True
+  - name: Set Squid Password
+    lineinfile:
+      path: /root/antifilter-tools-sevpn/squid.env
+      state: present
       line: PASSWORD={{ PASSWORD }}
       create: True
   - name: Spinning up docker-compose
