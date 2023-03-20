@@ -16,10 +16,10 @@ sudo apt update -y
 sudo apt install -y ansible sshpass
 
 #Set Inside and Outside Servers and create inventory file
-sed -i 's/INSIDE_IP/$INSIDE_IP/g' inventory
-sed -i 's/INSIDE_SSH_PASS/$INSIDE_SSH_PASS/g' inventory
-sed -i 's/OUTSIDE_IP/$OUTSIDE_IP/g' inventory
-sed -i 's/OUTSIDE_SSH_PASS/$OUTSIDE_SSH_PASS/g' inventory
+sed -i "s/INSIDE_IP/'${INSIDE_IP}'/g" inventory
+sed -i "s/INSIDE_SSH_PASS/'${INSIDE_SSH_PASS}'/g" inventory
+sed -i "s/OUTSIDE_IP/'${OUTSIDE_IP}'/g" inventory
+sed -i "s/OUTSIDE_SSH_PASS/'${OUTSIDE_SSH_PASS}'/g" inventory
 
 #run ansible command
 ansible-playbook -i inventory playbook.yaml --extra-vars="USERNAME='${SQUID_USER}' PASSWORD='${SQUID_PASS}'"
