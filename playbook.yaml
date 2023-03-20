@@ -164,24 +164,24 @@
   - name: Clone project
     git:
       repo: https://github.com/mrtshoot/antifilter-tools-sevpn.git
-      dest: /root/antifilter-tools-sevpn
+      dest: /var/opt/antifilter-tools-sevpn
       accept_hostkey: yes
       remote: origin
       clone: yes
       update: yes
   - name: Set Squid Username
     lineinfile:
-      path: /root/antifilter-tools-sevpn/squid.env
+      path: /var/opt/antifilter-tools-sevpn/squid.env
       state: present
       line: USERNAME={{ USERNAME }}
       create: True
   - name: Set Squid Password
     lineinfile:
-      path: /root/antifilter-tools-sevpn/squid.env
+      path: /var/opt/antifilter-tools-sevpn/squid.env
       state: present
       line: PASSWORD={{ PASSWORD }}
       create: True
   - name: Spinning up docker-compose
     shell:
       cmd: docker-compose up -d
-      chdir: /root/antifilter-tools-sevpn/
+      chdir: /var/opt/antifilter-tools-sevpn/
