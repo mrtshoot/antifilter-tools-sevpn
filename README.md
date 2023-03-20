@@ -29,4 +29,8 @@ and then copy the certificate in your openvpn-sample.ovpn file instead of MYCERT
 3. At first connect to your outside server. so open softether vpn server and click on new setting and do as the following picture:
 ![1](https://user-images.githubusercontent.com/56720170/226371171-0408a7e4-e146-413f-9040-6d0d950ff99f.png)
 
-5. 
+4. Then open your new connection and set your password on it.
+5. The wizard has been displayed so first of all clic on Site-to-Site as follow
+![2](https://user-images.githubusercontent.com/56720170/226372483-f8f616a0-1e74-4f66-a7c6-9d9c021353fa.png)
+
+
