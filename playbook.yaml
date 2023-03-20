@@ -52,7 +52,7 @@
     pip_packages:
       - ruamel.yaml
   tasks:
-    - name: Load kernel modules for RKE
+    - name: Load kernel modules
       modprobe:
         name: "{{ item }}"
         state: present
@@ -145,12 +145,13 @@
 - name: set shecan dns on Iran server
   hosts: inside
   remote_user: root
+  become: True
   tasks:
     - name: set shecan dns
       lineinfile:
         path: /etc/resolv.conf
         state: present
-        regexp: "nameserver 127.0.0.53"
+        regexp: "^nameserver*"
         line: "nameserver 178.22.122.100"
         backup: True
       tags:
@@ -172,7 +173,7 @@
     lineinfile:
       path: /root/antifilter-tools-sevpn/squid.env
       state: present
-      line: PASSWORD={{ USERNAME }}
+      line: USERNAME={{ USERNAME }}
       create: True
   - name: Set Squid Password
     lineinfile:
