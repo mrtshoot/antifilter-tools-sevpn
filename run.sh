@@ -29,4 +29,5 @@ echo "Your Certificate"
 echo "---------------------------------------------------"
 ansible -m shell --become -a 'grep "byte ServerCert" /var/opt/antifilter-tools-sevpn/se_data/vpn_server.config | cut -d " " -f3 | fold -w 64' -i inventory inside
 echo "---------------------------------------------------"
-echo "Put this Inside server IP and Certificate lines in openvpn-sample.ovpn file"
+echo
+echo "     Please Put this Inside server IP and Certificate lines in openvpn-sample.ovpn file!!!   "
