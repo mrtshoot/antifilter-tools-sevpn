@@ -56,3 +56,4 @@ and then copy the certificate in your openvpn-sample.ovpn file instead of MYCERT
 6. Then Click on Manage Virtual Hub and Create user here for your users.
 
 ## Donate: 
+TNCtD7pARiD7iEffov2ARXAP6fGNVvtFaA
