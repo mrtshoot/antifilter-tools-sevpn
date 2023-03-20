@@ -11,9 +11,7 @@ read -p "Squidproxy Password: " SQUID_PASS
 
 #Install requirementes
 sudo apt update -y
-sudo apt install -y \
-ansible && \
-sshpass
+sudo apt install -y ansible sshpass
 
 #Set Inside and Outside Servers and create inventory file
 sed -i 's/INSIDE_IP/"${INSIDE_IP}"/g' inventory
