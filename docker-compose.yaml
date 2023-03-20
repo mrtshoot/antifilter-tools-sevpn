@@ -1,12 +1,13 @@
-version: '3'
+version: '3.7'
 services:
+  
+  #VPN Service
   softether:
     image: mrtshoot/softether:5.1.9
     container_name: softether
     restart: unless-stopped
     cap_add:
       - NET_ADMIN
-    restart: always
     ports:
       - 53:53
       - 4443:443
@@ -19,16 +20,17 @@ services:
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
       - "/etc/timezone:/etc/timezone:ro"
-      - "./softether_data:/mnt"
-      - "./softether_log:/root/server_log"
-      - "./softether_packetlog:/root/packet_log"
-      - "./softether_securitylog:/root/security_log"
+      - "./se_data:/mnt"
+      - "./se_log:/root/server_log"
+      - "./se_packetlog:/root/packet_log"
+      - "./se_securitylog:/root/security_log"
+  
+  #Proxy Service
   squid:
     image: mrtshoot/squid-proxy:0.1
     container_name: squid
     ports:
       - 8443:3128
-    environment:
-      - USERNAME=username
-      - PASSWORD=password
+    env_file:
+      - squid.env
     restart: unless-stopped

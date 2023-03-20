@@ -1,0 +1,181 @@
+---
+#Servers_Requirements
+- name: Install Requirements Package and Modules
+  hosts: servers
+  remote_user: root
+  vars:
+    kernel_modules:
+      - br_netfilter
+      - ip6_udp_tunnel
+      - ip_set
+      - ip_set_hash_ip
+      - ip_set_hash_net
+      - iptable_filter
+      - iptable_nat
+      - iptable_mangle
+      - iptable_raw
+      - nf_conntrack_netlink
+      - nf_conntrack
+      - nf_defrag_ipv4
+      - nf_nat
+      - nfnetlink
+      - udp_tunnel
+      - veth
+      - vxlan
+      - x_tables
+      - xt_addrtype
+      - xt_conntrack
+      - xt_comment
+      - xt_mark
+      - xt_multiport
+      - xt_nat
+      - xt_recent
+      - xt_set
+      - xt_statistic
+      - xt_tcpudp
+    packages:
+      - vim
+      - htop
+      - git
+      - curl
+      - apt-transport-https
+      - ca-certificates
+      - software-properties-common
+      - wget
+      - gnupg
+      - lsb-release
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    pip_packages:
+      - ruamel.yaml
+  tasks:
+    - name: Load kernel modules for RKE
+      modprobe:
+        name: "{{ item }}"
+        state: present
+      with_items: "{{ kernel_modules }}"
+      tags:
+      - module
+    - name: Add Docker GPG key
+      apt_key:
+        url:  https://download.docker.com/linux/ubuntu/gpg
+        state: present
+        validate_certs: yes
+    - name: Add Docker APT repository
+      apt_repository:
+        repo:  deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+        state: present
+    - name: Install Required Packages
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+        autoremove: yes
+        autoclean: yes
+      with_items: "{{ packages }}"
+      tags:
+      - package
+      - apt
+
+#Services
+- name: Start Services
+  hosts: servers
+  remote_user: root
+  vars:
+    services:
+      - docker
+  tasks:
+    - name: Enable and Start Services
+      systemd:
+        name: "{{ item }}"
+        state: started
+        enabled: True
+        daemon_reload: True
+      with_items: "{{ services }}"
+      tags:
+      - service
+
+#Docker-compose
+- name: Install docker-compose
+  hosts: servers
+  tasks:
+    - name: Download and Install binary file
+      get_url:
+        url: https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-linux-x86_64
+        dest: /usr/local/bin/docker-compose
+        validate_certs: True 
+        timeout: 30
+        mode: 0755
+        owner: root
+        group: root
+
+#Tunning
+- name: Disable swap and load kernel modules
+  hosts: servers
+  remote_user: root
+  tasks:
+    - name: Disable SWAP since kubernetes can't work with swap enabled (1/2)
+      shell: |
+        swapoff -a
+      tags:
+      - tune
+    - name: Disable SWAP in fstab since kubernetes can't work with swap enabled (2/2)
+      replace:
+        path: /etc/fstab
+        regexp: '^([^#].*?\sswap\s+.*)$'
+        replace: '# \1'
+      tags:
+      - tune
+    - name: Modify sysctl entries
+      sysctl:
+        name: '{{ item.key }}'
+        value: '{{ item.value }}'
+        sysctl_set: yes
+        state: present
+        reload: yes
+      with_items:
+        - {key: net.bridge.bridge-nf-call-ip6tables, value: 1}
+        - {key: net.bridge.bridge-nf-call-iptables,  value: 1}
+        - {key: net.ipv4.ip_forward,  value: 1}
+      tags:
+      - tune
+- name: set shecan dns on Iran server
+  hosts: inside
+  remote_user: root
+  tasks:
+    - name: set shecan dns
+      lineinfile:
+        path: /etc/resolv.conf
+        state: present
+        regexp: "nameserver 127.0.0.53"
+        line: "nameserver 178.22.122.100"
+        backup: True
+      tags:
+      - tune
+#Deploy Softether
+- name: Deploy softether
+  hosts: servers
+  remote_user: root
+  tasks:
+  - name: Clone project
+    git:
+      repo: https://github.com/mrtshoot/antifilter-tools-sevpn.git
+      dest: /root/antifilter-tools-sevpn
+      accept_hostkey: yes
+      remote: origin
+      clone: yes
+      update: yes
+  - name: Create Squid env
+    lineinfile:
+      path: /root/antifilter-tools-sevpn/squid.env
+      state: present
+      line: USERNAME={{ USERNAME }}
+      line: PASSWORD={{ PASSWORD }}
+      create: True
+  - name: Spinning up docker-compose
+    shell:
+      cmd: docker-compose up -d
+      chdir: /root/antifilter-tools-sevpn/
