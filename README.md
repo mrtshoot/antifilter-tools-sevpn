@@ -34,7 +34,9 @@ and then copy the certificate in your openvpn-sample.ovpn file instead of MYCERT
 6. Then create your virtualhub **VPN**.
 7. Skip all unnecessary steps(Exit DNS, Disable Azure,..)
 8. Select your NIC
+
 ![3](https://user-images.githubusercontent.com/56720170/226373404-2c17535e-3125-4f55-92de-1214d00df8d3.png)
+
 9. Click on Manage your virtual hub
 10. Click on Virtual NAT and Dirtual DHCP Server(Secure NAT)
 11. Enable Secure NAT
